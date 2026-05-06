@@ -27,14 +27,13 @@ const Register: React.FC = () => {
       return;
     }
     setShowLoading(true);
-    try {
-      await register(name, email, password);
-      history.push('/dashboard');
-    } catch {
-      setToastMessage('Registration failed');
+    const { error } = await register(name, email, password);
+    setShowLoading(false);
+    if (error) {
+      setToastMessage(error.message || 'Registration failed');
       setShowToast(true);
-    } finally {
-      setShowLoading(false);
+    } else {
+      history.push('/dashboard');
     }
   };
 

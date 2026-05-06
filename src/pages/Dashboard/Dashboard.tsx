@@ -26,10 +26,10 @@ const Dashboard: React.FC = () => {
             <IonAvatar className="profile-avatar">
               <IonIcon icon={personCircle} size="large" />
             </IonAvatar>
-            <IonText>
-              <h1 className="profile-name">{user?.name || 'User'}</h1>
-              <p className="profile-email">{user?.email || 'user@example.com'}</p>
-            </IonText>
+             <IonText>
+               <h1 className="profile-name">{user?.user_metadata?.name || user?.email?.split('@')[0] || 'User'}</h1>
+               <p className="profile-email">{user?.email || 'user@example.com'}</p>
+             </IonText>
           </div>
 
           <IonCard className="stats-card">

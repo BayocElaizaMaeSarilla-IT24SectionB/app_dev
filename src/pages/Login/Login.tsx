@@ -21,14 +21,13 @@ const Login: React.FC = () => {
       return;
     }
     setShowLoading(true);
-    try {
-      await login(email, password);
-      history.push('/dashboard');
-    } catch {
-      setToastMessage('Login failed');
+    const { error } = await login(email, password);
+    setShowLoading(false);
+    if (error) {
+      setToastMessage(error.message || 'Login failed');
       setShowToast(true);
-    } finally {
-      setShowLoading(false);
+    } else {
+      history.push('/dashboard');
     }
   };
 

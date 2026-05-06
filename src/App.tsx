@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
-import TestPage from './pages/Test';
+import About from './pages/About/About';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -47,7 +47,11 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter basename={import.meta.env.BASE_URL}>
         <IonRouterOutlet>
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+
           <Route exact path="/home" component={Home} />
+
+          <Route exact path="/about" component={About} />
 
           <Route
             exact
@@ -72,8 +76,6 @@ const App: React.FC = () => {
               user ? <Dashboard /> : <Redirect to="/login" />
             }
           />
-
-          <Route exact path="/" component={TestPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
