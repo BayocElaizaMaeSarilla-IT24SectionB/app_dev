@@ -1,0 +1,128 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+.profile-email {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 5px 0 0;
+  text-align: center;
+}
+
+.stats-card {
+  animation: fadeInUp 0.5s ease-out 0.2s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-item ion-icon {
+  font-size: 2.5rem;
+}
+
+.stat-item h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #333;
+}
+
+.info-card {
+  animation: fadeInUp 0.5s ease-out 0.3s backwards;
+}
+
+.info-card ion-item {
+  --padding-start: 0;
+}
+
+.info-card ion-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.info-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.info-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.logout-button {
+  --border-color: #ff6b6b;
+  --color: #ff6b6b;
+  margin-top: 10px;
+  animation: fadeInUp 0.5s ease-out 0.4s backwards;
+}
+
+.logout-button:hover {
+  --background: #ff6b6b;
+  --color: white;
+}
