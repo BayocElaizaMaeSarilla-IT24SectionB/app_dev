@@ -5,8 +5,8 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: '/app_dev/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/app_dev/' : '/',
   plugins: [
     react(),
     legacy()
@@ -16,4 +16,4 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
   }
-})
+}))

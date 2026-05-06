@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -39,14 +39,24 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const PrivateRoute: React.FC<{ component: React.ComponentType<RouteComponentProps>; [key: string]: any }> = ({ component: Component, ...rest }) => {
   const { user } = useAuth();
-  return user ? <>{children}</> : <Redirect to="/login" />;
+  return (
+    <Route
+      {...rest}
+      render={props => user ? <Component {...props} /> : <Redirect to="/login" />}
+    />
+  );
 };
 
-const PublicRoute: React.FC<{ children: React.ReactNode; path: string }> = ({ children, path }) => {
+const PublicRoute: React.FC<{ component: React.ComponentType<RouteComponentProps>; [key: string]: any }> = ({ component: Component, ...rest }) => {
   const { user } = useAuth();
-  return user ? <Redirect to="/dashboard" /> : <Route path={path}>{children}</Route>;
+  return (
+    <Route
+      {...rest}
+      render={props => user ? <Redirect to="/dashboard" /> : <Component {...props} />}
+    />
+  );
 };
 
 const App: React.FC = () => (
@@ -58,19 +68,10 @@ const App: React.FC = () => (
             <Home />
           </Route>
 
-          <PublicRoute path="/login">
-            <Login />
-          </PublicRoute>
+          <PublicRoute exact path="/login" component={Login} />
+          <PublicRoute exact path="/register" component={Register} />
 
-          <PublicRoute path="/register">
-            <Register />
-          </PublicRoute>
-
-          <Route path="/dashboard">
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          </Route>
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
           <Route exact path="/">
             <Redirect to="/login" />
@@ -82,3 +83,4 @@ const App: React.FC = () => (
 );
 
 export default App;
+

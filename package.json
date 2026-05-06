@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-   "homepage": "https://github.com/BayocElaizaMaeSarilla-IT24SectionB/app_dev",
+  "homepage": "https://github.com/BayocElaizaMaeSarilla-IT24SectionB/app_dev",
   "scripts": {
-      "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
