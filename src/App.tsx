@@ -1,4 +1,4 @@
-import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
+import TestPage from './pages/Test';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -39,48 +40,50 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const PrivateRoute: React.FC<{ component: React.ComponentType<RouteComponentProps>; [key: string]: any }> = ({ component: Component, ...rest }) => {
+const App: React.FC = () => {
   const { user } = useAuth();
-  return (
-    <Route
-      {...rest}
-      render={props => user ? <Component {...props} /> : <Redirect to="/login" />}
-    />
-  );
-};
 
-const PublicRoute: React.FC<{ component: React.ComponentType<RouteComponentProps>; [key: string]: any }> = ({ component: Component, ...rest }) => {
-  const { user } = useAuth();
   return (
-    <Route
-      {...rest}
-      render={props => user ? <Redirect to="/dashboard" /> : <Component {...props} />}
-    />
-  );
-};
-
-const App: React.FC = () => (
-  <AuthProvider>
     <IonApp>
-      <IonReactRouter>
+      <IonReactRouter basename={import.meta.env.BASE_URL}>
         <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
+          <Route exact path="/home" component={Home} />
 
-          <PublicRoute exact path="/login" component={Login} />
-          <PublicRoute exact path="/register" component={Register} />
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              user ? <Redirect to="/dashboard" /> : <Login />
+            }
+          />
 
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <Route
+            exact
+            path="/register"
+            render={() =>
+              user ? <Redirect to="/dashboard" /> : <Register />
+            }
+          />
 
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
+          <Route
+            exact
+            path="/dashboard"
+            render={() =>
+              user ? <Dashboard /> : <Redirect to="/login" />
+            }
+          />
+
+          <Route exact path="/" component={TestPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
+  );
+};
+
+const Root: React.FC = () => (
+  <AuthProvider>
+    <App />
   </AuthProvider>
 );
 
-export default App;
-
+export default Root;
