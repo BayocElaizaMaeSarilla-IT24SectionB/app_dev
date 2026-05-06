@@ -38,11 +38,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      console.error('Supabase login error:', error);
+    }
     return { error };
   };
 
   const register = async (email: string, password: string, name: string) => {
-    const { error } = await supabase.auth.signUp({
+    console.log('Attempting signup with:', { email, name });
+    const { error, data } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -51,6 +55,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
       }
     });
+    if (error) {
+      console.error('Supabase signup error:', error);
+    } else {
+      console.log('Signup successful:', data);
+    }
     return { error };
   };
 
